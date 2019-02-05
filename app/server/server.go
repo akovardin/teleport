@@ -70,6 +70,7 @@ func (s *Server) Run() {
 
 	users := controllers.NewUsersController(s.services)
 	posts := controllers.NewPostsController(s.services)
+	vk := controllers.NewVKVontroller(s.services)
 
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 
@@ -84,6 +85,8 @@ func (s *Server) Run() {
 	api.POST("/posts/:id", posts.Update)
 	api.POST("/posts", posts.Create)
 	api.DELETE("/posts/:id", posts.Remove)
+
+	api.POST("/callback", vk.Callback)
 
 	// Start server
 	s.services.Logger.Infow("start api server", "port", s.port)

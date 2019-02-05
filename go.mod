@@ -3,6 +3,7 @@ module github.com/horechek/poster
 require (
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/jinzhu/gorm v1.9.2
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
 	github.com/jonboulle/clockwork v0.1.0
@@ -24,5 +25,5 @@ require (
 	golang.org/x/crypto v0.0.0-20190131182504-b8fe1690c613
 	golang.org/x/net v0.0.0-20181201002055-351d144fa1fc
 	gopkg.in/mailgun/mailgun-go.v1 v1.1.1
-	gopkg.in/telegram-bot-api.v4 v4.6.4
+	gopkg.in/telegram-bot-api.v4 v4.6.4 // indirect
 )

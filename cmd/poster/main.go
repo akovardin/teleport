@@ -50,7 +50,7 @@ func main() {
 		shugar.Fatalw("error on start proxy", zap.Error(err))
 	}
 
-	tg, err := telegram.NewTelegram(services, proxy, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", "adtechbeer")
+	tg, err := telegram.NewTelegram(services, proxy, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", "@adtechbeer", true)
 	if err != nil {
 		shugar.Fatalw("error on start telegram messenger", zap.Error(err))
 	}

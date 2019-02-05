@@ -2,10 +2,9 @@ package telegram
 
 import (
 	"net/http"
-	"strconv"
 	"time"
 
-	"gopkg.in/telegram-bot-api.v4"
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 
 	"github.com/horechek/poster/app/database"
 	"github.com/horechek/poster/app/di"
@@ -17,22 +16,35 @@ type Telegram struct {
 	services *di.Services
 }
 
-func NewTelegram(services *di.Services, proxy *http.Client, token, chat string) (*Telegram, error) {
-	bot, err := tgbotapi.NewBotAPIWithClient(token, proxy)
-	if err != nil {
-		return nil, err
+func NewTelegram(services *di.Services, proxy *http.Client, token, chat string, debug bool) (*Telegram, error) {
+	var (
+		client *tgbotapi.BotAPI
+		err    error
+	)
+
+	if proxy != nil {
+		client, err = tgbotapi.NewBotAPIWithClient(token, proxy)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		client, err = tgbotapi.NewBotAPI(token)
+		if err != nil {
+			return nil, err
+		}
 	}
+
+	client.Debug = debug
 
 	return &Telegram{
 		chat:     chat,
-		api:      bot,
+		api:      client,
 		services: services,
 	}, nil
 }
 
 func (t *Telegram) Send(post *database.Post) error {
-	chat, _ := strconv.Atoi(t.chat)
-	msg := tgbotapi.NewMessage(int64(chat), post.Title+" / / "+post.Body)
+	msg := tgbotapi.NewMessageToChannel(t.chat, post.Title+" / / "+post.Body)
 	if _, err := t.api.Send(msg); err != nil {
 		return err
 	}
