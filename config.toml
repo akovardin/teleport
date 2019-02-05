@@ -1,0 +1,13 @@
+[server]
+    port = 8080
+
+[database]
+    connect = "host=127.0.0.1 user=progres dbname=progres sslmode=disable password=progres port=5432"
+    driver = "postgres"
+    debug = true
+
+[mailgun]
+    key = ""
+    pubkey = ""
+    domain = ""
+    sender = ""
