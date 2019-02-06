@@ -11,6 +11,8 @@ import (
 	"github.com/horechek/teleport/app/telegram"
 )
 
+var confirm = "5d2c1139"
+
 type VKController struct {
 	services *di.Services
 	tg       *telegram.Telegram
@@ -52,7 +54,7 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		c.services.Logger.Warnw("error on send message to telegram", zap.Error(err))
 	}
 
-	return ctx.String(http.StatusOK, "5d2c1139")
+	return ctx.String(http.StatusOK, confirm)
 }
 
 /*
