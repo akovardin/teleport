@@ -23,3 +23,6 @@ pipeline:
     secrets: [ rsync_key ]
     script:
       - systemctl restart poster.service
+
+
+# drone secret add --repository horechek/poster2.go  --name rsync_key  --value @/root/.ssh/id_rsa --image drillster/drone-rsync
