@@ -16,13 +16,26 @@ type Bot struct {
 }
 
 func NewBot(app *di.Services, proxy *http.Client, token string, debug bool) (*Bot, error) {
-	bot := &Bot{
-		app: app,
+	var (
+		client *tgbotapi.BotAPI
+		err    error
+	)
+
+	if proxy != nil {
+		client, err = tgbotapi.NewBotAPIWithClient(token, proxy)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		client, err = tgbotapi.NewBotAPI(token)
+		if err != nil {
+			return nil, err
+		}
 	}
-	var err error
-	bot.client, err = tgbotapi.NewBotAPIWithClient(token, proxy)
-	if err != nil {
-		return nil, err
+
+	bot := &Bot{
+		app:    app,
+		client: client,
 	}
 
 	bot.app.Logger.Infow("telegram authorized", "account", bot.client.Self.UserName)
