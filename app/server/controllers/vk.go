@@ -48,7 +48,7 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		c.services.Logger.Warnw("error on send message to telegram", zap.Error(err))
 	}
 
-	return ctx.String(http.StatusOK, "d58c27f3")
+	return ctx.String(http.StatusOK, "5d2c1139")
 }
 
 /*
