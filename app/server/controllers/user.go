@@ -114,48 +114,6 @@ func (c *UsersController) Register(ctx echo.Context) error {
 	})
 }
 
-type UserRestoreRequest struct {
-	Email string `json:"email" valid:"email~В поле 'емайл' нужно указать настоящий емайл,required~'Емайл' обязательное поле"`
-}
-
-var (
-	domain  = "buzz.postazavr.com"
-	subject = `Восстановление пароля на сайте %s`
-	body    = `Для восстановления пароля перейдите по ссылке: %s`
-)
-
-func (c *UsersController) Restore(ctx echo.Context) error {
-	req := UserRestoreRequest{}
-	err := ctx.Bind(&req)
-	if err != nil {
-		return err
-	}
-
-	if _, err := valid.ValidateStruct(req); err != nil {
-		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": err.Error(),
-		})
-	}
-
-	// find user by email
-	user := database.User{}
-	err = c.services.Database.Model(user).
-		Where("email = ?", req.Email).
-		First(&user).Error
-
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return err
-	}
-
-	if err == gorm.ErrRecordNotFound {
-		return ctx.JSON(http.StatusBadRequest, UserResponse{Message: "Такого пользователя нет"})
-	}
-
-	return ctx.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Ссылка для востановления пароля отправленна на почту",
-	})
-}
-
 type UserUpdateRequest struct {
 	Password string `json:"password" valid:"required~'Пароль' обязательное поле"`
 }

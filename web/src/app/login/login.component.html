@@ -1,0 +1,22 @@
+<div class="ui centered aligned grid login">
+  <div *ngIf="!auth.isLoggedin()" class="row">
+    <div class="fifteen wide mobile six wide computer column">
+      <h1>Вход</h1>
+      <div class="ui active centered inline loader" *ngIf="loading"></div>
+      <div class="ui negative message" role="alert" *ngIf="message">
+      {{message}}
+      </div>
+      <form class="ui large form">
+        <div class="field">
+          <input type="text" name="email" placeholder="Емаил" #email>
+        </div>
+        <div class="field">
+          <input type="password" name="password" placeholder="Пароль" #password>
+        </div>
+        <div class="ui container center aligned">
+          <button class="ui button" (click)="login(email.value, password.value)">Вход</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

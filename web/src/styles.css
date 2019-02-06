@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+div.ui.head {
+  padding: 3rem 0rem 3rem 0rem;
+}
+
+.ui.tabular.menu {
+  margin-bottom: 2rem;
+}
+
+div.ui.main.container {
+  margin-bottom: 4rem;
+}
+
+div.feed {
+  margin-bottom: 4rem;
+}
+
+div.ui.container.center.aligned.restore {
+  margin-top: 2rem;
+}
+
+div.ui.active.centered.inline.loader {
+  margin-bottom: 1rem;
+}
+
+#footer {
+  display: block;
+  text-align: center; }
+#footer nav ul {
+  display: block;
+  margin-bottom: 40px; }
+#footer nav ul li {
+  margin: 8px 0; }
+
+#footer {
+  display: flex;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+  padding: 0 28px;
+  padding-top: 24px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5); }
+#footer p {
+  order: 1; }
+#footer nav {
+  order: 2;
+  margin-left: auto; }
+#footer nav ul {
+  display: flex; }
+#footer nav ul li {
+  margin-left: 20px; }
+#footer nav ul li span {
+  color: rgba(0, 0, 0, 0.3); }
+#footer nav ul li a {
+  color: rgba(0, 0, 0, 0.65);
+  text-decoration: none; }
+#footer nav ul li a:hover {
+  color: #000;
+  text-decoration: underline; }
+
+.dropdown ul, nav ol, nav ul, ul.unstyled, ul.unstyled ul {
+  list-style: none;
+}
+
+#footer {
+  margin-top: 15rem;
+}
