@@ -70,7 +70,7 @@ func (s *Server) Run() {
 
 	users := controllers.NewUsersController(s.services)
 	posts := controllers.NewPostsController(s.services)
-	vk := controllers.NewVKVontroller(s.services)
+	vk := controllers.NewVKСontroller(s.services)
 
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 

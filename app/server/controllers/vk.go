@@ -13,7 +13,7 @@ type VKController struct {
 	services *di.Services
 }
 
-func NewVKVontroller(services *di.Services) *VKController {
+func NewVKСontroller(services *di.Services) *VKController {
 	return &VKController{
 		services: services,
 	}
