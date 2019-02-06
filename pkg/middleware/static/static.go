@@ -29,7 +29,7 @@ func Static(config Config) echo.MiddlewareFunc {
 	}
 
 	if len(config.Extensions) == 0 {
-		config.Extensions = ExtSet{".js":{}, ".css":{}, ".ico":{}, ".map":{}}
+		config.Extensions = ExtSet{".js":{}, ".css":{}, ".ico":{}, ".map":{}, ".png":{}}
 	}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
