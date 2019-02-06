@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"go.uber.org/zap"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -38,6 +39,10 @@ func (c *VKController) Callback(ctx echo.Context) error {
 
 	if err := c.services.Database.Model(post).Save(post).Error; err != nil {
 		return err
+	}
+
+	if err := c.services.Telegram.Send(&database.Post{Title: "test", Body: "test"}); err != nil {
+		c.services.Logger.Warnw("error on send message to telegram", zap.Error(err))
 	}
 
 	return ctx.String(http.StatusOK, "d58c27f3")

@@ -11,11 +11,11 @@ import (
 )
 
 type Bot struct {
-	client *tgbotapi.BotAPI
-	app    *di.Services
+	client   *tgbotapi.BotAPI
+	services *di.Services
 }
 
-func NewBot(app *di.Services, proxy *http.Client, token string, debug bool) (*Bot, error) {
+func NewBot(services *di.Services, proxy *http.Client, token string, debug bool) (*Bot, error) {
 	var (
 		client *tgbotapi.BotAPI
 		err    error
@@ -34,11 +34,11 @@ func NewBot(app *di.Services, proxy *http.Client, token string, debug bool) (*Bo
 	}
 
 	bot := &Bot{
-		app:    app,
-		client: client,
+		services: services,
+		client:   client,
 	}
 
-	bot.app.Logger.Infow("telegram authorized", "account", bot.client.Self.UserName)
+	bot.services.Logger.Infow("telegram authorized", "account", bot.client.Self.UserName)
 	bot.client.Debug = debug
 
 	return bot, nil
@@ -58,7 +58,7 @@ func (b *Bot) Run() error {
 			continue
 		}
 
-		b.app.Logger.Infow("msg from telegram", "msg", update.Message)
+		b.services.Logger.Infow("msg from telegram", "msg", update.Message)
 
 		if !strings.HasPrefix(update.Message.Text, "/start") {
 			continue

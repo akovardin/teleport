@@ -45,23 +45,20 @@ func main() {
 		Clock:    clockwork.NewRealClock(),
 	}
 
-	//proxy, err := telegram.NewProxy("188.166.21.43:1111", "artem", "589311")
-	//if err != nil {
-	//	shugar.Fatalw("error on start proxy", zap.Error(err))
-	//}
+	// init telegram messenger
+	proxy, err := telegram.NewProxy("188.166.21.43:1111", "artem", "589311")
+	if err != nil {
+		shugar.Fatalw("error on start proxy", zap.Error(err))
+	}
 
-	//tg, err := telegram.NewTelegram(services, proxy, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", "@adtechbeer", true)
-	//if err != nil {
-	//	shugar.Fatalw("error on start telegram messenger", zap.Error(err))
-	//}
-	//
-	//if err := tg.Send(&database.Post{Title: "test", Body: "test"}); err != nil {
-	//	shugar.Fatalw("error on send message to telegram", zap.Error(err))
-	//}
+	tg, err := telegram.NewTelegram(services, proxy, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", "@adtechbeer", true)
+	if err != nil {
+		shugar.Fatalw("error on start telegram messenger", zap.Error(err))
+	}
 
-	//return
+	services.Telegram = tg
 
-	bot, err := telegram.NewBot(services, nil, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", true)
+	bot, err := telegram.NewBot(services, proxy, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", true)
 	if err != nil {
 		shugar.Fatalw("error on start telegram bot", zap.Error(err))
 	}

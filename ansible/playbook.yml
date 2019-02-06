@@ -15,7 +15,7 @@
     - name: upload nginx config
       copy:
         src: ./poster.conf
-        dest: /etc/nginx/sites-available
+        dest: /etc/nginx/sites-enabled
     - name: restart nginx
       service:
         name: nginx
