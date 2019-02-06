@@ -35,6 +35,10 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		return err
 	}
 
+	if resp.Object.Text == "" {
+		return nil
+	}
+
 	post := &database.Post{
 		Body:   resp.Object.Text,
 		Status: true,
@@ -44,7 +48,7 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		return err
 	}
 
-	if err := c.tg.Send(&database.Post{Title: "test", Body: "test"}); err != nil {
+	if err := c.tg.Send(post); err != nil {
 		c.services.Logger.Warnw("error on send message to telegram", zap.Error(err))
 	}
 
