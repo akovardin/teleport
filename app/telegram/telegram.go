@@ -44,7 +44,12 @@ func NewTelegram(services *di.Services, proxy *http.Client, token, chat string, 
 }
 
 func (t *Telegram) Send(post *database.Post) error {
-	msg := tgbotapi.NewMessageToChannel(t.chat, post.Title+" / / "+post.Body)
+	text := post.Body
+	if post.Title != "" {
+		text = post.Title + " / / " + text
+	}
+
+	msg := tgbotapi.NewMessageToChannel(t.chat, text)
 	if _, err := t.api.Send(msg); err != nil {
 		return err
 	}
