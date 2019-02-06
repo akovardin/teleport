@@ -1,0 +1,25 @@
+workspace:
+  base: /go
+  path: poster
+
+pipeline:
+  test:
+    image: golang
+    commands:
+      - go test ./...
+
+  build:
+    image: golang
+    commands:
+      - go build -o ./dist/poster/bin/poster ./cmd/poster
+
+  upload:
+    image: drillster/drone-rsync
+    user: root
+    hosts:
+      - 95.213.252.126 # adtech
+    source: ./dist/poster/
+    target: /opt/poster
+    secrets: [ rsync_key ]
+    script:
+      - systemctl restart poster.service

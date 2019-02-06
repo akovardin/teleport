@@ -1,0 +1,12 @@
+[Unit]
+Description=poster
+
+[Service]
+ExecStart=/opt/poster/bin/poster
+WorkingDirectory=/opt/poster/
+User=root
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
