@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: poster
+  path: src/github.com/horechek/poster
 
 pipeline:
   test:
@@ -11,7 +11,7 @@ pipeline:
   build:
     image: golang
     commands:
-      - go build -o ./dist/poster/bin/poster ./cmd/poster
+      - go build -o ./dist/poster/bin/poster github.com/horechek/poster/cmd/poster
 
   upload:
     image: drillster/drone-rsync
