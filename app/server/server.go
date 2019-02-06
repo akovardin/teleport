@@ -2,16 +2,21 @@ package server
 
 import (
 	"io/ioutil"
+	"net/http"
+	"strings"
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/rakyll/statik/fs"
 
 	"github.com/horechek/teleport/app/database"
 	"github.com/horechek/teleport/app/di"
 	"github.com/horechek/teleport/app/server/controllers"
 	"github.com/horechek/teleport/app/telegram"
+	"github.com/horechek/teleport/pkg/middleware/static"
+	_ "github.com/horechek/teleport/statik"
 )
 
 type Server struct {
@@ -41,15 +46,14 @@ func (s *Server) Run() {
 	}))
 
 	skiped := map[string]struct{}{
-		"/api/users/login":    {},
-		"/api/users/register": {},
-		"/api/users/restore":  {},
-		"/metrics":            {},
+		"/api/users/login": {},
 	}
 
 	e.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Skipper: func(c echo.Context) bool {
-			return true
+			if !strings.HasPrefix(c.Path(), "/api") {
+				return true
+			}
 
 			_, ok := skiped[c.Path()]
 			return ok
@@ -73,9 +77,23 @@ func (s *Server) Run() {
 		},
 	}))
 
+	statik, err := fs.New()
+	if err != nil {
+		s.services.Logger.Fatal(err)
+	}
+
+	// serve static files
+	e.Use(static.Static(static.Config{
+		Handler: http.FileServer(statik),
+	}))
+
+	// serve index.html
+	e.GET("/", echo.WrapHandler(http.FileServer(statik)))
+
 	users := controllers.NewUsersController(s.services)
 	posts := controllers.NewPostsController(s.services)
 	vk := controllers.NewVKСontroller(s.services, s.tg)
+	integrations := controllers.NewIntegrationsController(s.services)
 
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 	e.POST("/callback", vk.Callback)
@@ -83,14 +101,17 @@ func (s *Server) Run() {
 	api := e.Group("api")
 	// api
 	api.POST("/users/login", users.Login)
-	api.POST("/users/register", users.Register)
-	api.POST("/users/restore", users.Restore)
 	api.POST("/users/update", users.Update)
 
 	api.GET("/posts", posts.List)
 	api.POST("/posts/:id", posts.Update)
 	api.POST("/posts", posts.Create)
 	api.DELETE("/posts/:id", posts.Remove)
+
+	api.GET("/integrations", integrations.List)
+	api.POST("/integrations/:id", integrations.Update)
+	api.POST("/integrations", integrations.Create)
+	api.DELETE("/integrations/:id", integrations.Remove)
 
 	// Start server
 	s.services.Logger.Infow("start api server", "port", s.port)

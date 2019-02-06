@@ -42,7 +42,6 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		return ctx.String(http.StatusOK, confirm)
 	}
 
-
 	if resp.Object.Text == "" {
 		return ctx.String(http.StatusOK, "ok")
 	}
