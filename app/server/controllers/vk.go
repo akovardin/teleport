@@ -27,6 +27,7 @@ func NewVKСontroller(services *di.Services, tg *telegram.Telegram) *VKControlle
 
 func (c *VKController) Callback(ctx echo.Context) error {
 	var resp struct {
+		Type   string `json:"type"`
 		Object struct {
 			Id   int    `json:"id"`
 			Text string `json:"text"`
@@ -36,6 +37,11 @@ func (c *VKController) Callback(ctx echo.Context) error {
 	if err := ctx.Bind(&resp); err != nil {
 		return err
 	}
+
+	if resp.Type == "confirmation" {
+		return ctx.String(http.StatusOK, confirm)
+	}
+
 
 	if resp.Object.Text == "" {
 		return nil
@@ -54,7 +60,7 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		c.services.Logger.Warnw("error on send message to telegram", zap.Error(err))
 	}
 
-	return ctx.String(http.StatusOK, confirm)
+	return nil
 }
 
 /*
