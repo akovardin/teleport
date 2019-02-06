@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/horechek/poster/app/telegram"
 	"io/ioutil"
 
 	"github.com/jinzhu/gorm"
@@ -16,12 +17,14 @@ import (
 type Server struct {
 	services *di.Services
 	port     string
+	tg       *telegram.Telegram
 }
 
-func NewServer(services *di.Services, port string) *Server {
+func NewServer(services *di.Services, tg *telegram.Telegram, port string) *Server {
 	return &Server{
 		services: services,
 		port:     port,
+		tg:       tg,
 	}
 }
 
@@ -47,7 +50,7 @@ func (s *Server) Run() {
 	e.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Skipper: func(c echo.Context) bool {
 			return true
-			
+
 			_, ok := skiped[c.Path()]
 			return ok
 		},
@@ -72,7 +75,7 @@ func (s *Server) Run() {
 
 	users := controllers.NewUsersController(s.services)
 	posts := controllers.NewPostsController(s.services)
-	vk := controllers.NewVKСontroller(s.services)
+	vk := controllers.NewVKСontroller(s.services, s.tg)
 
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/horechek/poster/app/telegram"
 	"go.uber.org/zap"
 	"net/http"
 
@@ -12,11 +13,13 @@ import (
 
 type VKController struct {
 	services *di.Services
+	tg       *telegram.Telegram
 }
 
-func NewVKСontroller(services *di.Services) *VKController {
+func NewVKСontroller(services *di.Services, tg *telegram.Telegram) *VKController {
 	return &VKController{
 		services: services,
+		tg:       tg,
 	}
 }
 
@@ -41,7 +44,7 @@ func (c *VKController) Callback(ctx echo.Context) error {
 		return err
 	}
 
-	if err := c.services.Telegram.Send(&database.Post{Title: "test", Body: "test"}); err != nil {
+	if err := c.tg.Send(&database.Post{Title: "test", Body: "test"}); err != nil {
 		c.services.Logger.Warnw("error on send message to telegram", zap.Error(err))
 	}
 

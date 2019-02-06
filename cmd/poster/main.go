@@ -56,8 +56,6 @@ func main() {
 		shugar.Fatalw("error on start telegram messenger", zap.Error(err))
 	}
 
-	services.Telegram = tg
-
 	bot, err := telegram.NewBot(services, proxy, "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8", true)
 	if err != nil {
 		shugar.Fatalw("error on start telegram bot", zap.Error(err))
