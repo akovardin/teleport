@@ -78,6 +78,7 @@ func (s *Server) Run() {
 	vk := controllers.NewVKСontroller(s.services, s.tg)
 
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
+	e.POST("/callback", vk.Callback)
 
 	api := e.Group("api")
 	// api
@@ -90,8 +91,6 @@ func (s *Server) Run() {
 	api.POST("/posts/:id", posts.Update)
 	api.POST("/posts", posts.Create)
 	api.DELETE("/posts/:id", posts.Remove)
-
-	api.POST("/callback", vk.Callback)
 
 	// Start server
 	s.services.Logger.Infow("start api server", "port", s.port)
