@@ -8,8 +8,8 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 
-	"github.com/horechek/poster/app/database"
-	"github.com/horechek/poster/app/di"
+	"github.com/horechek/teleport/app/database"
+	"github.com/horechek/teleport/app/di"
 )
 
 type UserRequest struct {

@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: src/github.com/horechek/poster
+  path: src/github.com/horechek/teleport
 
 pipeline:
   test:
@@ -11,15 +11,15 @@ pipeline:
   build:
     image: golang
     commands:
-      - go build -o ./dist/poster/bin/poster github.com/horechek/poster/cmd/poster
+      - go build -o ./dist/teleport/bin/teleport github.com/horechek/teleport/cmd/teleport
 
   upload:
     image: drillster/drone-rsync
     user: root
     hosts:
       - 95.213.252.126 # adtech
-    source: ./dist/poster/
-    target: /opt/poster
+    source: ./dist/teleport/
+    target: /opt/teleport
     secrets: [ rsync_key ]
     script:
       - systemctl restart poster.service

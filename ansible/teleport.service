@@ -1,0 +1,12 @@
+[Unit]
+Description=teleport
+
+[Service]
+ExecStart=/opt/teleport/bin/teleport
+WorkingDirectory=/opt/teleport/
+User=root
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 
-	"github.com/horechek/poster/app/database"
-	"github.com/horechek/poster/app/di"
+	"github.com/horechek/teleport/app/database"
+	"github.com/horechek/teleport/app/di"
 )
 
 type Telegram struct {

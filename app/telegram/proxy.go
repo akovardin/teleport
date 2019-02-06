@@ -1,8 +1,9 @@
 package telegram
 
 import (
-	"golang.org/x/net/proxy"
 	"net/http"
+
+	"golang.org/x/net/proxy"
 )
 
 func NewProxy(address, user, password string) (*http.Client, error) {

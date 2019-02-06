@@ -9,9 +9,9 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 
-	db "github.com/horechek/poster/app/database"
-	"github.com/horechek/poster/app/di"
-	"github.com/horechek/poster/pkg/params"
+	db "github.com/horechek/teleport/app/database"
+	"github.com/horechek/teleport/app/di"
+	"github.com/horechek/teleport/pkg/params"
 )
 
 type PostsController struct {

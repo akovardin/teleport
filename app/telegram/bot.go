@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 
-	"github.com/horechek/poster/app/di"
+	"github.com/horechek/teleport/app/di"
 )
 
 type Bot struct {

@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	"github.com/horechek/poster/app/telegram"
-	"go.uber.org/zap"
 	"net/http"
 
 	"github.com/labstack/echo"
+	"go.uber.org/zap"
 
-	"github.com/horechek/poster/app/database"
-	"github.com/horechek/poster/app/di"
+	"github.com/horechek/teleport/app/database"
+	"github.com/horechek/teleport/app/di"
+	"github.com/horechek/teleport/app/telegram"
 )
 
 type VKController struct {

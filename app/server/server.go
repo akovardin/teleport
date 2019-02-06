@@ -1,7 +1,6 @@
 package server
 
 import (
-	"github.com/horechek/poster/app/telegram"
 	"io/ioutil"
 
 	"github.com/jinzhu/gorm"
@@ -9,9 +8,10 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/horechek/poster/app/database"
-	"github.com/horechek/poster/app/di"
-	"github.com/horechek/poster/app/server/controllers"
+	"github.com/horechek/teleport/app/database"
+	"github.com/horechek/teleport/app/di"
+	"github.com/horechek/teleport/app/server/controllers"
+	"github.com/horechek/teleport/app/telegram"
 )
 
 type Server struct {
