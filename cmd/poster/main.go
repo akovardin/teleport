@@ -62,6 +62,6 @@ func main() {
 	}
 	go bot.Run()
 
-	server := server.NewServer(services, viper.GetString("server.port"))
+	server := server.NewServer(services, tg, viper.GetString("server.port"))
 	server.Run()
 }
