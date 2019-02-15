@@ -105,6 +105,22 @@ func main() {
 						return db.Save(&u).Error
 					},
 				},
+				{
+					Name: "remove",
+					Flags: []cli.Flag{
+						cli.StringFlag{
+							Name:  "email",
+							Value: "admit@adtech.beer",
+							Usage: "user email for login",
+						},
+					},
+					Action: func(c *cli.Context) error {
+						u := database.User{
+							Email:    c.String("email"),
+						}
+						return db.Delete(&u, "email = ?", u.Email).Error
+					},
+				},
 			},
 		},
 		{
