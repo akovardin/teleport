@@ -110,7 +110,7 @@ func main() {
 					Flags: []cli.Flag{
 						cli.StringFlag{
 							Name:  "email",
-							Value: "admit@adtech.beer",
+							Value: "admin@adtech.beer",
 							Usage: "user email for login",
 						},
 					},
