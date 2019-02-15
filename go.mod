@@ -17,6 +17,7 @@ require (
 	github.com/prometheus/client_golang v0.9.2
 	github.com/rakyll/statik v0.1.5
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
+	github.com/urfave/cli v1.20.0
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v0.0.0-20170224212429-dcecefd839c4 // indirect
 	go.uber.org/atomic v1.3.2 // indirect

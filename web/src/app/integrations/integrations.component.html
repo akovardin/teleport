@@ -1,0 +1,45 @@
+<div *ngIf="!loading">
+
+  <div class="ui negative message" role="alert" *ngIf="message">
+  {{message}}
+  </div>
+
+  <div *ngFor="let model of models; index as i" class="feed">
+
+    <form class="ui form" [class.loading]="loading">
+
+      <div class="field">
+        <label>Заголовок</label>
+        <input type="text" name="integration[title]" placeholder="Название сообщества" [(ngModel)]="model.title">
+      </div>
+
+      <div class="field">
+        <div class="three fields">
+          <div class="field">
+            <label>Ключ</label>
+            <input type="text" name="integration[botKey]" placeholder="xxx" [(ngModel)]="model.botKey">
+          </div>
+
+          <div class="field">
+            <label>Канал</label>
+            <input type="text" name="integration[channelName]" placeholder="xxx" [(ngModel)]="model.channelName">
+          </div>
+
+          <div class="field">
+            <label>Секрет</label>
+            <input type="text" name="integration[vkSecret]" placeholder="xxx" [(ngModel)]="model.vkSecret">
+          </div>
+        </div>
+      </div>
+
+      <div class="ui">
+        <div class="ui button" (click)="save(model)" tabindex="0">Сохранить</div>
+        <div class="ui button" (click)="remove(i)" tabindex="0">Удалить</div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="ui button" (click)="add()" tabindex="0">Добавить</div>
+
+<div class="ui active centered inline loader" *ngIf="loading"></div>

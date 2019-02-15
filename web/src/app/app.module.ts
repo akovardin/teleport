@@ -11,6 +11,9 @@ import {LoggedGuard} from './logged.guard';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './services/auth.service';
 import {AppComponent} from './app.component';
+import {IntegrationsComponent} from './integrations/integrations.component';
+import {UsersComponent} from './users/users.component';
+import {IntegrationsService} from "./integrations/integrations.service";
 
 const server = environment.server;
 
@@ -18,6 +21,8 @@ const server = environment.server;
   declarations: [
     AppComponent,
     LoginComponent,
+    IntegrationsComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +31,7 @@ const server = environment.server;
     AppRoutingModule
   ],
   providers: [
+    IntegrationsService,
     AuthService,
     LoggedGuard,
     {provide: 'server', useValue: server},

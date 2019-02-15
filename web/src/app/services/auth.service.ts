@@ -98,6 +98,7 @@ export class AuthService {
   }
 
   isLoggedin(): boolean {
+    console.log(this.getEmail(), this.getToken())
     return this.getEmail() !== null && this.getToken() !== null;
   }
 

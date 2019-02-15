@@ -21,12 +21,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe(res => {
-      if (this.router.url === '/feeds') {
-        this.activeLinkIndex = 2;
-      } else if (this.router.url === '/notifications') {
+      if (this.router.url === '/integrations') {
         this.activeLinkIndex = 1;
-      } else if (this.router.url === '/profile') {
-        this.activeLinkIndex = 3;
+      } else if (this.router.url === '/users') {
+        this.activeLinkIndex = 2;
       }
     });
   }

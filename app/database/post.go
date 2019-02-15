@@ -3,13 +3,16 @@ package database
 import "github.com/jinzhu/gorm"
 
 type Post struct {
-	ID        int    `gorm:"primary_key" json:"id"`
-	Title     string `json:"title"`
-	Body      string `json:"body"`
-	Status    bool   `json:"status"`
-	Send      bool   `json:"send"`
-	CreatedAt int64  `json:"created_at"`
-	UpdatedAt int64  `json:"updated_at"`
+	ID     int    `gorm:"primary_key" json:"id"`
+	Title  string `json:"title"`
+	Body   string `json:"body"`
+	Status bool   `json:"status"`
+	Send   bool   `json:"send"`
+
+	IntegrationID int `json:"integrationId"`
+
+	CreatedAt int64 `json:"created_at"`
+	UpdatedAt int64 `json:"updated_at"`
 }
 
 func (Post) TableName() string {
