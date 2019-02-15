@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {IntegrationsService} from "./integrations.service";
 import {AuthService} from "../services/auth.service";
 import {Integration} from "./integration.model";
@@ -14,7 +14,10 @@ export class IntegrationsComponent implements OnInit {
   loading: boolean;
   message: string;
 
-  constructor(private storage: IntegrationsService, public auth: AuthService) {
+  constructor(
+    @Inject('domain') private domain: string,
+    private storage: IntegrationsService,
+    public auth: AuthService) {
     this.loading = true;
     this.message = '';
   }

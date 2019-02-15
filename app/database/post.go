@@ -19,22 +19,22 @@ func (Post) TableName() string {
 	return "post"
 }
 
-func (p Post) FindOne(db *gorm.DB, condition Condition) (Post, error) {
-	err := db.Find(db.Model(p), condition).First(&p).Error
+func (p *Post) FindOne(db *gorm.DB, condition Condition) (*Post, error) {
+	err := db.Find(db.Model(p), condition).First(p).Error
 
 	return p, err
 }
 
-func (p Post) FindAll(db *gorm.DB, condition Condition) ([]Post, error) {
+func (p *Post) FindAll(db *gorm.DB, condition Condition) ([]Post, error) {
 	posts := []Post{}
-	err := Find(db.Model(p), condition).Find(&posts).Error
+	err := find(db.Model(p), condition).Find(&posts).Error
 
 	return posts, err
 }
 
-func (p Post) Count(db *gorm.DB, condition Condition) (int, error) {
+func (p *Post) Count(db *gorm.DB, condition Condition) (int, error) {
 	count := 0
-	err := Find(db.Model(p), condition).Count(&count).Error
+	err := find(db.Model(p), condition).Count(&count).Error
 
 	return count, err
 }

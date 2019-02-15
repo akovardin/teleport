@@ -12,14 +12,14 @@ class Auth {
 export class AuthService {
   headers: HttpHeaders;
 
-  constructor(@Inject('server') private server: string,
+  constructor(@Inject('api') private api: string,
               private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.append('Content-Type', 'application/json');
   }
 
   login(email: string, password: string): Observable<any> {
-    const observer = this.http.post(this.server + 'users/login', JSON.stringify({
+    const observer = this.http.post(this.api + 'users/login', JSON.stringify({
       email: email,
       password: password,
     }), {headers: this.headers});
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   register(email: string, password: string): Observable<any> {
-    const observer = this.http.post(this.server + 'users/register', JSON.stringify({
+    const observer = this.http.post(this.api + 'users/register', JSON.stringify({
       email: email,
       password: password,
     }), {headers: this.headers});
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   update(password: string): Observable<any> {
-    const observer = this.http.post(this.server + 'users/update', JSON.stringify({
+    const observer = this.http.post(this.api + 'users/update', JSON.stringify({
       password: password,
     }), {headers: this.authHeaders()});
     return observer.pipe(
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   restore(email: string): Observable<any> {
-    const observer = this.http.post(this.server + 'users/restore', JSON.stringify({
+    const observer = this.http.post(this.api + 'users/restore', JSON.stringify({
       email: email,
     }), {headers: this.headers});
     return observer.pipe(

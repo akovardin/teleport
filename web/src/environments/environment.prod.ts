@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  server: 'http://teleport.adtech.beer/api/'
+  api: 'http://teleport.adtech.beer/api/',
+  domain: 'teleport.adtech.beer'
 };

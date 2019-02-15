@@ -126,10 +126,10 @@ func (c *PostsController) Remove(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "removed")
 }
 
-func findPost(database *gorm.DB, c echo.Context) (db.Post, error) {
+func findPost(database *gorm.DB, c echo.Context) (*db.Post, error) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return db.Post{}, err
+		return nil, err
 	}
 
 	condition := db.Condition{
@@ -141,6 +141,6 @@ func findPost(database *gorm.DB, c echo.Context) (db.Post, error) {
 		},
 	}
 
-	model := db.Post{}
+	model := &db.Post{}
 	return model.FindOne(database, condition)
 }

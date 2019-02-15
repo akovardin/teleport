@@ -25,4 +25,4 @@
       systemd:
         state: restarted
         daemon_reload: yes
-        name: poster.service
+        name: teleport.service

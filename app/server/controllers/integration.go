@@ -114,10 +114,10 @@ func (c *IntegrationsController) Remove(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "removed")
 }
 
-func findIntegration(database *gorm.DB, c echo.Context) (db.Integration, error) {
+func findIntegration(database *gorm.DB, c echo.Context) (*db.Integration, error) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		return db.Integration{}, err
+		return &db.Integration{}, err
 	}
 
 	condition := db.Condition{

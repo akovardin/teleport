@@ -60,7 +60,7 @@ func NewCondition(sort, order string) Condition {
 	return condition
 }
 
-func Find(q *gorm.DB, condition Condition) *gorm.DB {
+func find(q *gorm.DB, condition Condition) *gorm.DB {
 	for _, join := range condition.Joins {
 		q = q.Joins(join)
 	}

@@ -16,20 +16,44 @@
       <div class="field">
         <div class="three fields">
           <div class="field">
-            <label>Ключ</label>
-            <input type="text" name="integration[botKey]" placeholder="xxx" [(ngModel)]="model.botKey">
+            <label>Токен</label>
+            <input type="text" name="integration[token]" placeholder="xxx" [(ngModel)]="model.token">
           </div>
 
           <div class="field">
             <label>Канал</label>
-            <input type="text" name="integration[channelName]" placeholder="xxx" [(ngModel)]="model.channelName">
+            <input type="text" name="integration[channel]" placeholder="xxx" [(ngModel)]="model.channel">
           </div>
 
           <div class="field">
             <label>Секрет</label>
-            <input type="text" name="integration[vkSecret]" placeholder="xxx" [(ngModel)]="model.vkSecret">
+            <input type="text" name="integration[secret]" placeholder="xxx" [(ngModel)]="model.secret">
           </div>
         </div>
+      </div>
+
+      <div class="field">
+        <div class="three fields">
+          <div class="field">
+              <label>Прокси адрес</label>
+            <input type="text" name="integration[proxyAddress]" placeholder="xxx" [(ngModel)]="model.proxyAddress">
+          </div>
+
+          <div class="field">
+            <label>Пользователь</label>
+            <input type="text" name="integration[proxyUser]" placeholder="xxx" [(ngModel)]="model.proxyUser">
+          </div>
+
+          <div class="field">
+            <label>Пароль</label>
+            <input type="text" name="integration[proxyPass]" placeholder="xxx" [(ngModel)]="model.proxyPass">
+          </div>
+        </div>
+      </div>
+
+      <div class="field" *ngIf="model.id">
+        <label>Колбэк</label>
+        <input type="text" name="integration[title]" placeholder="http://" disabled value="http://{{domain}}/callback/{{model.id}}">
       </div>
 
       <div class="ui">

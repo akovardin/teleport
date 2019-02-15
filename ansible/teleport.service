@@ -2,7 +2,7 @@
 Description=teleport
 
 [Service]
-ExecStart=/opt/teleport/bin/teleport
+ExecStart=/opt/teleport/bin/teleport server
 WorkingDirectory=/opt/teleport/
 User=root
 Restart=always

@@ -3,14 +3,17 @@ package database
 import "github.com/jinzhu/gorm"
 
 type Integration struct {
-	ID          int    `gorm:"primary_key" json:"id"`
-	Title       string `json:"title"`
-	Body        string `json:"body"`
-	Status      bool   `json:"status"`
-	Send        bool   `json:"send"`
-	BotKey      string `json:"botKey"`
-	ChannelName string `json:"channelName"`
-	VKSecret    string `json:"vkSecret"`
+	ID           int    `gorm:"primary_key" json:"id"`
+	Title        string `json:"title"`
+	Body         string `json:"body"`
+	Status       bool   `json:"status"`
+	Send         bool   `json:"send"`
+	Token        string `json:"token"`
+	Channel      string `json:"channel"`
+	Secret       string `json:"secret"`
+	ProxyAddress string `json:"proxyAddress"`
+	ProxyUser    string `json:"proxyUser"`
+	ProxyPass    string `json:"proxyPass"`
 
 	UserID int `json:"userId"`
 
@@ -19,25 +22,25 @@ type Integration struct {
 }
 
 func (Integration) TableName() string {
-	return "post"
+	return "integration"
 }
 
-func (p Integration) FindOne(db *gorm.DB, condition Condition) (Integration, error) {
-	err := Find(db.Model(p), condition).First(&p).Error
+func (p *Integration) FindOne(db *gorm.DB, condition Condition) (*Integration, error) {
+	err := find(db.Model(p), condition).First(p).Error
 
 	return p, err
 }
 
-func (p Integration) FindAll(db *gorm.DB, condition Condition) ([]Integration, error) {
+func (p *Integration) FindAll(db *gorm.DB, condition Condition) ([]Integration, error) {
 	integrations := []Integration{}
-	err := Find(db.Model(p), condition).Find(&integrations).Error
+	err := find(db.Model(p), condition).Find(&integrations).Error
 
 	return integrations, err
 }
 
-func (p Integration) Count(db *gorm.DB, condition Condition) (int, error) {
+func (p *Integration) Count(db *gorm.DB, condition Condition) (int, error) {
 	count := 0
-	err := Find(db.Model(p), condition).Count(&count).Error
+	err := find(db.Model(p), condition).Count(&count).Error
 
 	return count, err
 }

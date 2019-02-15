@@ -1,16 +1,23 @@
 export class Integration {
   id?: number;
   title?: string;
-  botKey?: string;
-  channelName?: string;
-  vkSecret?: string;
+  token?: string;
+  channel?: string;
+  secret?: string;
+
+  proxyAddress?: string;
+  proxyUser?: string;
+  proxyPass?: string;
 
 
-  constructor(id?: number, title?: string, botKey?: string, channelName?: string, vkSecret?: string) {
+  constructor(id?: number, title?: string, token?: string, channel?: string, secret?: string, proxyAddress?: string, proxyUser?: string, proxyPass?: string) {
     this.id = id;
     this.title = title;
-    this.botKey = botKey;
-    this.channelName = channelName;
-    this.vkSecret = vkSecret;
+    this.token = token;
+    this.channel = channel;
+    this.secret = secret;
+    this.proxyAddress = proxyAddress;
+    this.proxyUser = proxyUser;
+    this.proxyPass = proxyPass;
   }
 }

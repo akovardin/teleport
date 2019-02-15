@@ -11,12 +11,11 @@ import (
 )
 
 type Telegram struct {
-	chat     string
 	api      *tgbotapi.BotAPI
 	services *di.Services
 }
 
-func NewTelegram(services *di.Services, proxy *http.Client, token, chat string, debug bool) (*Telegram, error) {
+func NewTelegram(services *di.Services, proxy *http.Client, token string, debug bool) (*Telegram, error) {
 	var (
 		client *tgbotapi.BotAPI
 		err    error
@@ -37,19 +36,18 @@ func NewTelegram(services *di.Services, proxy *http.Client, token, chat string, 
 	client.Debug = debug
 
 	return &Telegram{
-		chat:     chat,
 		api:      client,
 		services: services,
 	}, nil
 }
 
-func (t *Telegram) Send(post *database.Post) error {
+func (t *Telegram) Send(chat string, post *database.Post) error {
 	text := post.Body
 	if post.Title != "" {
 		text = post.Title + " / / " + text
 	}
 
-	msg := tgbotapi.NewMessageToChannel(t.chat, text)
+	msg := tgbotapi.NewMessageToChannel(chat, text)
 	if _, err := t.api.Send(msg); err != nil {
 		return err
 	}

@@ -14,7 +14,6 @@ import (
 	"github.com/horechek/teleport/app/database"
 	"github.com/horechek/teleport/app/di"
 	"github.com/horechek/teleport/app/server/controllers"
-	"github.com/horechek/teleport/app/telegram"
 	"github.com/horechek/teleport/pkg/middleware/static"
 	_ "github.com/horechek/teleport/statik"
 )
@@ -22,14 +21,12 @@ import (
 type Server struct {
 	services *di.Services
 	port     string
-	tg       *telegram.Telegram
 }
 
-func NewServer(services *di.Services, tg *telegram.Telegram, port string) *Server {
+func NewServer(services *di.Services, port string) *Server {
 	return &Server{
 		services: services,
 		port:     port,
-		tg:       tg,
 	}
 }
 
@@ -92,11 +89,11 @@ func (s *Server) Run() {
 
 	users := controllers.NewUsersController(s.services)
 	posts := controllers.NewPostsController(s.services)
-	vk := controllers.NewVKСontroller(s.services, s.tg)
+	callabck := controllers.NewCallbackController(s.services)
 	integrations := controllers.NewIntegrationsController(s.services)
 
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
-	e.POST("/callback", vk.Callback)
+	e.POST("/callback/:id", callabck.Callback)
 
 	api := e.Group("api")
 	// api
