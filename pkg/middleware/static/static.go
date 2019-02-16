@@ -3,6 +3,7 @@ package static
 import (
 	"net/http"
 	"path/filepath"
+	"strings"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -13,6 +14,7 @@ type (
 		Skipper    middleware.Skipper
 		Handler    http.Handler
 		Extensions ExtSet
+		Prefixes   PrefixSet
 	}
 )
 
@@ -29,7 +31,11 @@ func Static(config Config) echo.MiddlewareFunc {
 	}
 
 	if len(config.Extensions) == 0 {
-		config.Extensions = ExtSet{".js":{}, ".css":{}, ".ico":{}, ".map":{}, ".png":{}}
+		config.Extensions = ExtSet{".js": {}, ".css": {}, ".ico": {}, ".map": {}, ".png": {}}
+	}
+
+	if len(config.Prefixes) == 0 {
+		config.Prefixes = PrefixSet{"/api", "/metrics"}
 	}
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
@@ -39,16 +45,30 @@ func Static(config Config) echo.MiddlewareFunc {
 			}
 
 			p := c.Request().URL.Path
+			if config.Prefixes.Exists(p) {
+				next(c)
+				return nil
+			}
 
-
-			if !config.Extensions.Exists(filepath.Ext(p)) {
-				return next(c)
+			if !config.Extensions.Exists(filepath.Ext(p)) && p != "/" {
+				c.Request().URL.Path = "/"
 			}
 
 			config.Handler.ServeHTTP(c.Response(), c.Request())
 			return nil
 		}
 	}
+}
+
+type PrefixSet []string
+
+func (ps PrefixSet) Exists(path string) bool {
+	for _, p := range ps {
+		if strings.HasPrefix(path, p) {
+			return true
+		}
+	}
+	return false
 }
 
 type ExtSet map[string]struct{}

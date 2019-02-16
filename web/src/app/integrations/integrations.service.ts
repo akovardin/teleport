@@ -7,13 +7,13 @@ import {AuthService} from '../services/auth.service';
 
 @Injectable()
 export class IntegrationsService {
-  constructor(@Inject('api') private api: string,
+  constructor(@Inject('server') private server: string,
               private http: HttpClient,
               private auth: AuthService) {
   }
 
   list(): Observable<Integration[]> {
-    return this.http.get(`${this.api}integrations`, {headers: this.headers()}).pipe(
+    return this.http.get(`${this.server}integrations`, {headers: this.headers()}).pipe(
       map((response: Integration[]) => {
         const data: Integration[] = [];
         response.map((item: Integration) => {
@@ -36,7 +36,7 @@ export class IntegrationsService {
   }
 
   save(model: Integration): Observable<any> {
-    let url = `${this.api }integrations`;
+    let url = `${this.server }integrations`;
     if (model.id) {
       url = `${url}/${model.id}`;
     }
@@ -45,7 +45,7 @@ export class IntegrationsService {
   }
 
   remove(model: Integration): Observable<any> {
-    const url = `${this.api }integrations/${model.id}`;
+    const url = `${this.server }integrations/${model.id}`;
     return this.http.delete(url, {headers: this.headers()});
   }
 

@@ -15,7 +15,7 @@ export class IntegrationsComponent implements OnInit {
   message: string;
 
   constructor(
-    @Inject('domain') private domain: string,
+    @Inject('server') private server: string,
     private storage: IntegrationsService,
     public auth: AuthService) {
     this.loading = true;

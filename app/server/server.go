@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/horechek/teleport/pkg/middleware/static"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -14,7 +15,6 @@ import (
 	"github.com/horechek/teleport/app/database"
 	"github.com/horechek/teleport/app/di"
 	"github.com/horechek/teleport/app/server/controllers"
-	"github.com/horechek/teleport/pkg/middleware/static"
 	_ "github.com/horechek/teleport/statik"
 )
 
@@ -31,10 +31,10 @@ func NewServer(services *di.Services, port string) *Server {
 }
 
 func (s *Server) Run() {
-	e := echo.New()
-	e.Logger.SetOutput(ioutil.Discard)
-	e.Use(middleware.Recover())
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	server := echo.New()
+	server.Logger.SetOutput(ioutil.Discard)
+	server.Use(middleware.Recover())
+	server.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept,
 			echo.HeaderAuthorization},
@@ -43,12 +43,12 @@ func (s *Server) Run() {
 	}))
 
 	skiped := map[string]struct{}{
-		"/api/users/login": {},
+		"/server/users/login": {},
 	}
 
-	e.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+	server.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Skipper: func(c echo.Context) bool {
-			if !strings.HasPrefix(c.Path(), "/api") {
+			if !strings.HasPrefix(c.Path(), "/server") {
 				return true
 			}
 
@@ -80,23 +80,22 @@ func (s *Server) Run() {
 	}
 
 	// serve static files
-	e.Use(static.Static(static.Config{
+	server.Use(static.Static(static.Config{
 		Handler: http.FileServer(statik),
 	}))
-
-	// serve index.html
-	e.GET("/", echo.WrapHandler(http.FileServer(statik)))
 
 	users := controllers.NewUsersController(s.services)
 	posts := controllers.NewPostsController(s.services)
 	callabck := controllers.NewCallbackController(s.services)
 	integrations := controllers.NewIntegrationsController(s.services)
 
-	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
-	e.POST("/callback/:id", callabck.Callback)
+	server.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
+	server.POST("/callback/:id", callabck.Callback)
 
-	api := e.Group("api")
-	// api
+	api := server.Group("api")
+
+	api.POST("/callback/:id", callabck.Callback)
+
 	api.POST("/users/login", users.Login)
 	api.POST("/users/update", users.Update)
 
@@ -111,6 +110,7 @@ func (s *Server) Run() {
 	api.DELETE("/integrations/:id", integrations.Remove)
 
 	// Start server
-	s.services.Logger.Infow("start api server", "port", s.port)
-	s.services.Logger.Fatalw("error on starting server", "err", e.Start(":"+s.port))
+	s.services.Logger.Infow("start server server", "port", s.port)
+	s.services.Logger.Fatalw("error on starting server", "err", server.Start(":"+s.port))
+
 }

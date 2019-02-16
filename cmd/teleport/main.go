@@ -5,26 +5,23 @@ import (
 	"os"
 
 	"github.com/jonboulle/clockwork"
-	"go.uber.org/zap"
 	"github.com/urfave/cli"
+	"go.uber.org/zap"
 
 	"github.com/horechek/teleport/app/database"
 	"github.com/horechek/teleport/app/di"
 	"github.com/horechek/teleport/app/server"
-	"github.com/horechek/teleport/app/telegram"
 )
 
-var (
-	token      = "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8"
-	chanelName = "@adtechbeer"
-	secret     = "5d2c1139"
-
-	proxyAddress = "188.166.21.43:1111"
-	proxyUser    = "artem"
-	proxyPass    = "589311"
-
-	port = "8080"
-)
+//var (
+//token      = "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8"
+//chanelName = "@adtechbeer"
+//secret     = "5d2c1139"
+//
+//proxyAddress = "188.166.21.43:1111"
+//proxyUser    = "artem"
+//proxyPass    = "589311"
+//)
 
 func main() {
 	// init logger
@@ -116,7 +113,7 @@ func main() {
 					},
 					Action: func(c *cli.Context) error {
 						u := database.User{
-							Email:    c.String("email"),
+							Email: c.String("email"),
 						}
 						return db.Delete(&u, "email = ?", u.Email).Error
 					},
@@ -125,22 +122,15 @@ func main() {
 		},
 		{
 			Name: "server",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "port",
+					Value: "8080",
+					Usage: "server gui port",
+				},
+			},
 			Action: func(c *cli.Context) error {
-				// init telegram messenger
-				proxy, err := telegram.NewProxy(proxyAddress, proxyUser, proxyPass)
-				if err != nil {
-					shugar.Fatalw("error on start proxy", zap.Error(err))
-					return err
-				}
-
-				bot, err := telegram.NewBot(services, proxy, token, true)
-				if err != nil {
-					shugar.Fatalw("error on start telegram bot", zap.Error(err))
-					return err
-				}
-				go bot.Run()
-
-				server := server.NewServer(services, port)
+				server := server.NewServer(services, c.String("port"))
 				server.Run()
 
 				return nil

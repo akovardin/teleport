@@ -15,8 +15,7 @@ import {IntegrationsComponent} from './integrations/integrations.component';
 import {UsersComponent} from './users/users.component';
 import {IntegrationsService} from "./integrations/integrations.service";
 
-const api = environment.api;
-const domain = environment.domain;
+const server = environment.server;
 
 @NgModule({
   declarations: [
@@ -35,8 +34,7 @@ const domain = environment.domain;
     IntegrationsService,
     AuthService,
     LoggedGuard,
-    {provide: 'api', useValue: api},
-    {provide: 'domain', useValue: domain},
+    {provide: 'server', useValue: server},
   ],
   bootstrap: [AppComponent]
 })

@@ -53,7 +53,7 @@
 
       <div class="field" *ngIf="model.id">
         <label>Колбэк</label>
-        <input type="text" name="integration[title]" placeholder="http://" disabled value="http://{{domain}}/callback/{{model.id}}">
+        <input type="text" name="integration[title]" placeholder="http://" disabled value="{{server}}/callback/{{model.id}}">
       </div>
 
       <div class="ui">
