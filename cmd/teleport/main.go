@@ -13,16 +13,6 @@ import (
 	"github.com/horechek/teleport/app/server"
 )
 
-//var (
-//token      = "551357910:AAHvqlvWmYZvqhLl_M42qjaG0n3O0jRDqG8"
-//chanelName = "@adtechbeer"
-//secret     = "5d2c1139"
-//
-//proxyAddress = "188.166.21.43:1111"
-//proxyUser    = "artem"
-//proxyPass    = "589311"
-//)
-
 func main() {
 	// init logger
 	log, err := zap.NewProduction()
@@ -53,8 +43,8 @@ func main() {
 	}
 
 	app := cli.NewApp()
-	app.Name = "cli"
-	app.Usage = "CPA network services"
+	app.Name = "teleport"
+	app.Usage = "Util for repost message from vk to telegram"
 	app.Commands = []cli.Command{
 		{
 			Name: "users",

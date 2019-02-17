@@ -13,6 +13,7 @@ export class IntegrationsComponent implements OnInit {
   models: Integration[];
   loading: boolean;
   message: string;
+  hostname: string;
 
   constructor(
     @Inject('server') private server: string,
@@ -20,6 +21,7 @@ export class IntegrationsComponent implements OnInit {
     public auth: AuthService) {
     this.loading = true;
     this.message = '';
+    this.hostname = window.location.hostname;
   }
 
   ngOnInit() {
