@@ -22,14 +22,25 @@ div.ui.active.centered.inline.loader {
   margin-bottom: 1rem;
 }
 
+#logo {
+  margin-right: 15px;
+  width: 80px;
+  float: left;
+}
+
 #footer {
   display: block;
-  text-align: center; }
+  text-align: center;
+}
+
 #footer nav ul {
   display: block;
-  margin-bottom: 40px; }
+  margin-bottom: 40px;
+}
+
 #footer nav ul li {
-  margin: 8px 0; }
+  margin: 8px 0;
+}
 
 #footer {
   display: flex;
@@ -38,24 +49,39 @@ div.ui.active.centered.inline.loader {
   padding: 0 28px;
   padding-top: 24px;
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.5); }
+  color: rgba(0, 0, 0, 0.5);
+}
+
 #footer p {
-  order: 1; }
+  order: 1;
+}
+
 #footer nav {
   order: 2;
-  margin-left: auto; }
+  margin-left: auto;
+}
+
 #footer nav ul {
-  display: flex; }
+  display: flex;
+}
+
 #footer nav ul li {
-  margin-left: 20px; }
+  margin-left: 20px;
+}
+
 #footer nav ul li span {
-  color: rgba(0, 0, 0, 0.3); }
+  color: rgba(0, 0, 0, 0.3);
+}
+
 #footer nav ul li a {
   color: rgba(0, 0, 0, 0.65);
-  text-decoration: none; }
+  text-decoration: none;
+}
+
 #footer nav ul li a:hover {
   color: #000;
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .dropdown ul, nav ol, nav ul, ul.unstyled, ul.unstyled ul {
   list-style: none;
