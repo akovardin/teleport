@@ -7,9 +7,12 @@ import (
 )
 
 func NewProxy(address, user, password string) (*http.Client, error) {
-	auth := &proxy.Auth{
-		User:     user,
-		Password: password,
+	var auth *proxy.Auth
+	if user != "" && password != "" {
+		auth = &proxy.Auth{
+			User:     user,
+			Password: password,
+		}
 	}
 	dialer, err := proxy.SOCKS5("tcp", address, auth, proxy.Direct)
 	if err != nil {
