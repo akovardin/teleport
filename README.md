@@ -6,4 +6,7 @@
 ## TODO
 
 [] Настроить https
-[] Неправильно работают URL
+
+## Telegram
+
+Прокси для телеги через тор https://github.com/PeterDaveHello/tor-socks-proxy
