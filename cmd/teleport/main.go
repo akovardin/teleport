@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jinzhu/gorm"
 	"github.com/jonboulle/clockwork"
 	"github.com/urfave/cli"
 	"go.uber.org/zap"
@@ -22,29 +23,46 @@ func main() {
 	defer log.Sync()
 	shugar := log.Sugar()
 
-	// init db
-	dbconf := database.Config{
-		Debug:   true,
-		Driver:  "sqlite3",
-		Connect: "teleport.db",
-	}
-	db := database.NewDatabase(dbconf, shugar)
-
-	// migrations
-	db.AutoMigrate(database.User{})
-	db.AutoMigrate(database.Integration{})
-	db.AutoMigrate(database.Post{})
-
 	// init di
-	services := &di.Services{
-		Database: db,
-		Logger:   shugar,
-		Clock:    clockwork.NewRealClock(),
-	}
+	var (
+		services *di.Services
+		db       *gorm.DB
+	)
 
 	app := cli.NewApp()
 	app.Name = "teleport"
 	app.Usage = "Util for repost message from vk to telegram"
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "database",
+			Value: "teleport.db",
+			Usage: "database file",
+		},
+	}
+	app.Before = func(c *cli.Context) error {
+		// init db
+		dbconf := database.Config{
+			Debug:   true,
+			Driver:  "sqlite3",
+			Connect: c.String("database"),
+		}
+
+		db = database.NewDatabase(dbconf, shugar)
+
+		// migrations
+		db.AutoMigrate(database.User{})
+		db.AutoMigrate(database.Integration{})
+		db.AutoMigrate(database.Post{})
+
+		services = &di.Services{
+			Database: db,
+			Logger:   shugar,
+			Clock:    clockwork.NewRealClock(),
+		}
+
+		return nil
+	}
+
 	app.Commands = []cli.Command{
 		{
 			Name: "users",
